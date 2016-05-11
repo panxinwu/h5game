@@ -3,40 +3,169 @@
   <head>
     <meta charset="utf-8">
     <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <title>网易加速Go</title>
-
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <!-- Place favicon.ico in the root directory -->
-
     <!-- build:css styles/vendor.css -->
     <!-- bower:css -->
     <!-- endbower -->
     <!-- endbuild -->
-
     <!-- build:css styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
+    <link rel="stylesheet" type="text/css" href="styles/play.css">
   </head>
   <body>
-    <div class="go">
-      <div class="go_start">
+    <div id="go_container" class="go">
+      <div id="go_start" class="go_start" style="display:none;">
         <div class="go_start_eye">
           <span class="text_icon"></span>
-          <i class="eye_icon"></i>
+          <i id="eye_icon" class="eye_icon"></i>
         </div>
-        <a href="#" class="start_btn"></a>
+        <a href="javascript:void(0)" id="start_btn" class="start_btn"></a>
+      </div>
+      <div id="go_select" class="go_select" style="display:none;">
+        <div class="go_select_wrap">
+          <div class="sex_select">
+            <span class="select_btn_all boy selected"><i class="select_icon"></i></span>
+            <span class="select_btn_all girl"><i class="select_icon"></i></span>
+          </div>
+          <div class="guest">
+            <span class="select_btn_all wangdongcheng selected"><i class="select_icon"></i></span>
+            <span class="select_btn_all duchun selected"><i class="select_icon"></i></span>
+            <span class="select_btn_all linyun selected"><i class="select_icon"></i></span>
+            <span class="select_btn_all ella "><i class="select_icon"></i></span>
+            <span class="select_btn_all songxiaobao selected"><i class="select_icon"></i></span>
+            <span class="select_btn_all tianliang "><i class="select_icon"></i></span>
+            <span class="select_btn_all duhaitao selected"><i class="select_icon"></i></span>
+            <span class="select_btn_all jialing selected"><i class="select_icon"></i></span>
+          </div>
+        </div>
+      </div>
+      <div class="mod_container">
+        <div class="stage">
+          <div class="stage_bg">
+            <div id="stage_bg_move" class="stage_bg_move speed0"></div>
+          </div>
+          <div class="stage_box">
+            <div class="stage_main">
+
+              <div class="score">
+                <div class="score_eye"></div>
+                <div class="score_num">X00</div>
+              </div>
+
+              <div class="role">
+                <div class="role_item role_1 " style="-webkit-transform: translateX(100);">
+                  <div class="role_name">
+                    <div class="role_name_txt"><i>伍</i></div>
+                  </div>
+                  <div class="role_body"></div>
+                </div>
+                <div class="role_item role_2 hide" style="-webkit-transform: translateX(130px);">
+                  <div class="role_name">
+                    <div class="role_name_txt"><i>男猎人</i></div>
+                  </div>
+                  <div class="role_body"></div>
+                </div>
+                <div class="role_item role_3 " style="-webkit-transform: translateX(250px);">
+                  <div class="role_name">
+                    <div class="role_name_txt"><i>杜淳</i></div>
+                  </div>
+                  <div class="role_body"></div>
+                </div>
+                <div class="role_item role_4 " style="-webkit-transform: translateX(400px);">
+                  <div class="role_name">
+                    <div class="role_name_txt"><i>贾玲</i></div>
+                  </div>
+                  <div class="role_body"></div>
+                </div>
+                <div class="role_item role_5 hide" style="-webkit-transform: translateX(120px);">
+                  <div class="role_name">
+                    <div class="role_name_txt"><i>角色名</i></div>
+                  </div>
+                  <div class="role_body"></div>
+                </div>
+                <div class="role_item role_6 hide" style="-webkit-transform: translateX(140px);">
+                  <div class="role_name">
+                    <div class="role_name_txt"><i>角色名</i></div>
+                  </div>
+                  <div class="role_body"></div>
+                </div>
+                <div class="role_item role_7 hide" style="-webkit-transform: translateX(150px);">
+                  <div class="role_name">
+                    <div class="role_name_txt"><i>角色名</i></div>
+                  </div>
+                  <div class="role_body"></div>
+                </div>
+                <div class="role_item role_8 hide" style="-webkit-transform: translateX(190px);">
+                  <div class="role_name">
+                    <div class="role_name_txt"><i>角色名</i></div>
+                  </div>
+                  <div class="role_body"></div>
+                </div>
+                <div class="role_item role_9 hide" style="-webkit-transform: translateX(200px);">
+                  <div class="role_name">
+                    <div class="role_name_txt"><i>角色名</i></div>
+                  </div>
+                  <div class="role_body"></div>
+                </div>
+                <div class="role_item role_10 hide" style="-webkit-transform: translateX(240px);">
+                  <div class="role_name">
+                    <div class="role_name_txt"><i>角色名</i></div>
+                  </div>
+                  <div class="role_body"></div>
+                </div>
+              </div>
+
+              <div class="bar">
+                <div class="bar_red" style="left: 0%"></div>
+                <div class="bar_black" style="left: 5%"></div>
+              </div>
+            </div>
+          </div>
+          <div class="stage_tips stage_tips_1">
+            <div class="stage_tips_txt">名字名字</div>
+            <div class="stage_tips_btn"></div>
+          </div>
+
+          <div class="stage_tips stage_tips_2">
+            <div class="stage_tips_btn"></div>
+          </div>
+
+          <div class="stage_tips stage_tips_3">
+            <div class="stage_tips_btn stage_tips_btn_l"></div>
+            <div class="stage_tips_btn stage_tips_btn_r"></div>
+          </div>
+
+          <div class="stage_tips stage_tips_4">
+            <div class="stage_tips_btn stage_tips_btn_l"></div>
+            <div class="stage_tips_btn stage_tips_btn_r"></div>
+          </div>
+        </div>
+        <div class="loading" style="display:none;">
+          <div class="loading_flex">
+            <div class="loading_tit"></div>
+            <div class="loading_bg">
+              <div class="loading_bar" style="width: 20%"></div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <!-- build:js scripts/vendor.js -->
     <!-- bower:js -->
     <!-- endbower -->
     <!-- endbuild -->
-
+    <script src="scripts/rem.min.js"></script>
+    <script src="scripts/zepto.min.js"></script>
+    <script src="scripts/fx_methods.js"></script>
+    <script src="scripts/fx.js"></script>
     <!-- build:js scripts/main.js -->
     <script src="scripts/main.js"></script>
     <!-- endbuild -->
-    <script src="scripts/rem.min.js"></script>
+    <script src="scripts/play.js"></script>
 
   </body>
 </html>
