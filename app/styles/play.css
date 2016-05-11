@@ -68,7 +68,7 @@ input[type="text"], textarea {
   width: 4138px;
   height: 100%;
   /*animation: stage_bg 6s infinite linear;*/
-  /*animation-name: stage_bg;*/
+  animation-name: stage_bg;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
   background: url(../images/stage_bg_73d0c060.png) repeat-x 0 bottom;

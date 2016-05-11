@@ -31,12 +31,14 @@ halo.use('loader', function(m){
         sure_btn: $('#sure_btn'),
         go_select: $('#go_select'),
         stage_game: $('#stage_game'),
+        role_1: $('#role_1'),
       },
       conf: {
         clientWidth: document.body.clientWidth,
         clientHeight: document.body.clientHeight,
         radioWidth: window.screen.width,
         radioHeight: window.screen.height,
+        x_position: 350,
       },
       resizeFun : {
         _fixMode: "height",
@@ -115,14 +117,15 @@ halo.use('loader', function(m){
             function run() {
                 x -= _pri.util.speed;
                 if(x<0) x+=2069;
-                $bg.css("backgroundPosition", x+"px bottom");
-                webkitRequestAnimationFrame(run);
+                $bg.css("backgroundPositionX", x+"px");
+                // webkitRequestAnimationFrame(run);
+                setTimeout(run,100);
             }
             run();
         },
         shake: function(){
           if(window.DeviceMotionEvent) {
-              var speed = 25;
+              var speed = 15;
               var x, y, z, lastX, lastY, lastZ;
               x = y = z = lastX = lastY = lastZ = 0;
               window.addEventListener('devicemotion', function(event){
@@ -130,7 +133,11 @@ halo.use('loader', function(m){
                   x = acceleration.x;
                   y = acceleration.y;
                   if(Math.abs(x-lastX) > speed || Math.abs(y-lastY) > speed) {
-                      _pri.node.stage_bg_move.removeClass('speed0').addClass('speednone').addClass('speed3').removeClass('speednone');
+                    var sum = Math.abs(x-lastX) + Math.abs(y-lastY);
+                    var x = Math.floor(sum/10);
+                    _pri.conf.x_position = _pri.conf.x_position - x;
+                    _pri.node.role_1.attr('style','-webkit-transform: translateX('+ _pri.conf.x_position+ 'px);');
+                      // _pri.node.stage_bg_move.removeClass('speed0').addClass('speednone').addClass('speed3').removeClass('speednone');
                       // _pri.node.stage_bg_move.css('animation-duration', '3s');
                       // _pri.node.stage_bg_move.css('-webkit-animation-duration', '3s');
                       _pri.util.speed = 30;
@@ -165,7 +172,7 @@ halo.use('loader', function(m){
           }
           _pri.resizeFun.init().addEl($("#go_container"));
           _pri.util.eye_iconAni();
-          _pri.util.startMoveBg();
+          // _pri.util.startMoveBg();
           // _pri.node.go_container.css({width:_pri.conf.width,height:_pri.conf.height,});
         },
         runBgAni: function(){
