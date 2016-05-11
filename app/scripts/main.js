@@ -18,6 +18,36 @@ halo.use('loader', function(m){
       $('#loading').fadeOut('slow');
       $('#go_start').fadeIn('slow');
   },500);
+    // 定义常量
+    var SEX_MALE = 0;
+    var SEX_FEMALE = 1;
+    var GUEST_ENUM = {
+      0: 'wangdongcheng',
+      1: 'duchun',
+      2: 'linyun',
+      3: 'ella',
+      4: 'songxiaobao',
+      5: 'tianliang',
+      6: 'duhaitao',
+      7: 'jialing'
+    };
+    var _tool = {
+      support3d: ('WebKitCSSMatrix' in window && 'm11' in new WebKitCSSMatrix()),
+      setTranslateY: function (y) {
+          return this.support3d ? 'translate3d(0, ' + y + ', 0)' : 'translate(0, ' + y + ')';
+      },
+      setTranslateX: function (x) {
+          return this.support3d ? 'translate3d(' + x + ', 0, 0)' : 'translate(' + x + ', 0)';
+      }
+    };
+    var requestAnimationFrame = window.requestAnimationFrame
+      || window.mozRequestAnimationFrame
+      || window.webkitRequestAnimationFrame
+      || window.msRequestAnimationFrame
+      || window.oRequestAnimationFrame
+      || function(callback) {
+          setTimeout(callback, 1000 / 60);
+        };
     var _pri = {
       //UI元素集合
       node: {
@@ -25,11 +55,11 @@ halo.use('loader', function(m){
         go_start: $('#go_start'),
         go_select: $('#go_select'),
         select_btn_all: $('.select_btn_all'),
+        guest_btn_all: $('.select_btn_all', '.guest'),
         go_container: $('#go_container'),
         eye_icon: $('#eye_icon'),
         stage_bg_move: $('#stage_bg_move'),
         sure_btn: $('#sure_btn'),
-        go_select: $('#go_select'),
         stage_game: $('#stage_game'),
         role_1: $('#role_1'),
       },
@@ -108,18 +138,29 @@ halo.use('loader', function(m){
       util: {
         speed: 10,
         startGameFun: function(){
-          _pri.node.go_select.fadeOut('slow');
-          _pri.node.stage_game.fadeIn('slow');
+          var selectedGuest = _pri.util.selectedGuest;
+          var selectedSex = _pri.util.selectedSex;
+          console.log(selectedGuest);
+          console.log(selectedSex);
+          if (selectedGuest.length < 6) {
+            alert('人数不够');
+          } else {
+            _pri.node.go_select.fadeOut('slow');
+            _pri.node.stage_game.fadeIn('slow');
+            _pri.util.startMoveBg();
+          }
         },
         startMoveBg: function() {
-            var $bg = $("#stage_bg_move");
-            var x = 2069;
+            var $bg = $('.stage_bg');
+            var x = 0;
             function run() {
                 x -= _pri.util.speed;
-                if(x<0) x+=2069;
-                $bg.css("backgroundPositionX", x+"px");
-                // webkitRequestAnimationFrame(run);
-                setTimeout(run,100);
+
+                if (x <= -4138) {
+                  x = 0;
+                }
+                $bg.css('-webkit-transform', _tool.setTranslateX(x + 'px'));
+                requestAnimationFrame(run);
             }
             run();
         },
@@ -172,7 +213,7 @@ halo.use('loader', function(m){
           }
           _pri.resizeFun.init().addEl($("#go_container"));
           _pri.util.eye_iconAni();
-          // _pri.util.startMoveBg();
+
           // _pri.node.go_container.css({width:_pri.conf.width,height:_pri.conf.height,});
         },
         runBgAni: function(){
@@ -184,18 +225,54 @@ halo.use('loader', function(m){
         startGame: function(){
           $(_pri.node.go_start).fadeOut('ease');
           $(_pri.node.go_select).fadeIn('ease');
+          _pri.util.initSelect();
+        },
+        initSelect: function () {
+          var selectedGuest = [];
+          var guestArr = [0, 1, 2, 3, 4, 5, 6, 7];
+          for (var i = 0; i < 6; i++) {
+            var randIndex = Math.floor(Math.random() * (8 - i));
+            selectedGuest.push(guestArr.splice(randIndex, 1)[0]);
+          }
+          _pri.node.guest_btn_all.each(function (i) {
+            if (selectedGuest.indexOf(i) >= 0) {
+              $(this).addClass('selected');
+            }
+          });
+          _pri.util.selectedGuest = selectedGuest.sort();
+          _pri.util.selectedSex = 0;
         },
         selectFun: function(){
+          var index = $(this).index();
           if($(this).hasClass('boy') || $(this).hasClass('girl')){
             $('.boy').removeClass('selected');
             $('.girl').removeClass('selected');
+            _pri.util.selectedSex = index;
+            return _pri.util.toggleSelected($(this));
           }
-          if(!$(this).hasClass('selected')){
-            $(this).addClass('selected');
-          }else{
-            $(this).removeClass('selected');
-          }
+
+          var selectedIndex = -1;
+          var selectedGuest = _pri.util.selectedGuest;
+          selectedGuest.forEach(function (item, i) {
+            if (item === index) {
+              selectedIndex = i;
+            }
+          });
+          _pri.util.toggleSelected($(this), function () {
+            _pri.util.selectedGuest.push(index);
+          }, function () {
+            _pri.util.selectedGuest.splice(selectedIndex, 1);
+          });
         },
+        toggleSelected: function ($el, onSelected, onRemoved) {
+          if(!$el.hasClass('selected')){
+            $el.addClass('selected');
+            onSelected && onSelected();
+          }else{
+            $el.removeClass('selected');
+            onRemoved && onRemoved();
+          }
+        }
       }
   }
   var init = function() {
