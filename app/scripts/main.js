@@ -104,9 +104,21 @@ halo.use('loader', function(m){
           _pri.node.sure_btn.on("click",_pri.util.startGameFun);
       },
       util: {
+        speed: 10,
         startGameFun: function(){
           _pri.node.go_select.fadeOut('slow');
           _pri.node.stage_game.fadeIn('slow');
+        },
+        startMoveBg: function() {
+            var $bg = $("#stage_bg_move");
+            var x = 2069;
+            function run() {
+                x -= _pri.util.speed;
+                if(x<0) x+=2069;
+                $bg.css("backgroundPosition", x+"px bottom");
+                webkitRequestAnimationFrame(run);
+            }
+            run();
         },
         shake: function(){
           if(window.DeviceMotionEvent) {
@@ -121,7 +133,8 @@ halo.use('loader', function(m){
                       _pri.node.stage_bg_move.removeClass('speed0').addClass('speednone').addClass('speed3').removeClass('speednone');
                       // _pri.node.stage_bg_move.css('animation-duration', '3s');
                       // _pri.node.stage_bg_move.css('-webkit-animation-duration', '3s');
-                      alert(_pri.node.stage_bg_move.attr('class'));
+                      _pri.util.speed = 30;
+                      // alert(_pri.node.stage_bg_move.attr('class'));
                     };
                   lastX = x;
                   lastY = y;
@@ -152,6 +165,7 @@ halo.use('loader', function(m){
           }
           _pri.resizeFun.init().addEl($("#go_container"));
           _pri.util.eye_iconAni();
+          _pri.util.startMoveBg();
           // _pri.node.go_container.css({width:_pri.conf.width,height:_pri.conf.height,});
         },
         runBgAni: function(){
