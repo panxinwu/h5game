@@ -40,6 +40,14 @@ halo.use('loader', function(m){
           return this.support3d ? 'translate3d(' + x + ', 0, 0)' : 'translate(' + x + ', 0)';
       }
     };
+    var requestAnimationFrame = window.requestAnimationFrame
+      || window.mozRequestAnimationFrame
+      || window.webkitRequestAnimationFrame
+      || window.msRequestAnimationFrame
+      || window.oRequestAnimationFrame
+      || function(callback) {
+          setTimeout(callback, 1000 / 60);
+        };
     var _pri = {
       //UI元素集合
       node: {
@@ -145,8 +153,8 @@ halo.use('loader', function(m){
                 if (x <= -4138) {
                   x = 0;
                 }
-                $bg.css('-webkit-transform', _tool.setTranslateX(x));
-                webkitRequestAnimationFrame(run);
+                $bg.css('-webkit-transform', _tool.setTranslateX(x + 'px'));
+                requestAnimationFrame(run);
             }
             run();
         },

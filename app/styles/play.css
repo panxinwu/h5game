@@ -42,9 +42,14 @@ input[type="text"], textarea {
   clear: both;
   visibility: hidden;
 }
-
+.mod_container {
+  width: 100%;
+  height: 100%;
+}
 /* Play */
 .stage {
+  width: 100%;
+  height: 100%;
   position: absolute;
   left: 0;
   right: 0;
@@ -54,6 +59,8 @@ input[type="text"], textarea {
 }
 
 .stage_bg {
+  width: 100%;
+  height: 100%;
   position: absolute;
   left: 0;
   right: 0;
@@ -61,24 +68,17 @@ input[type="text"], textarea {
   bottom: 0;
   font-size: 0;
   white-space: nowrap;
+  z-index: -100;
 }
 
 .stage_bg_move {
   display: inline-block;
   width: 4138px;
   height: 100%;
-  /*animation: stage_bg 6s infinite linear;*/
-  /*animation-name: stage_bg;*/
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
   background: url(../images/stage_bg_73d0c060.png) repeat-x 0 bottom;
   background-size: 2069px 320px;
+  transform: translateX(0);
   -webkit-transform: translateX(0);
-  -webkit-animation-fill-mode: both;
-  position: absolute;
-  left:0;
-  bottom:0;
-  z-index:-1;
 }
 .speednone { animation-name: ''; }
 .speed0{animation-duration:6s}
