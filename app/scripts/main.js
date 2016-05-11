@@ -1,5 +1,24 @@
 (function(){
-  var _pri = {
+  var loading_barwidth = 0;
+halo.use('loader', function(m){
+  m.loader(['images/stage_bg_73d0c060.png',
+  'images/bg_all.png',
+  'images/loading_floor_2edcdddc.png',
+  'images/play_bg_c906301b.png',
+  'images/zhayan.png',])
+  .loadend(function(percent){
+    loading_barwidth = loading_barwidth +  20;
+    $('#loading_bar').css('width',loading_barwidth+"%");
+  })
+  .complete(function(){
+    var template = $('#template').html();
+    $('#container').html(template);
+    // $('#loading').addClass('loadingAni');
+    setTimeout(function(){
+      $('#loading').fadeOut('slow');
+      $('#go_start').fadeIn('slow');
+  },500);
+    var _pri = {
       //UI元素集合
       node: {
         start_btn: $('#start_btn'),
@@ -9,6 +28,9 @@
         go_container: $('#go_container'),
         eye_icon: $('#eye_icon'),
         stage_bg_move: $('#stage_bg_move'),
+        sure_btn: $('#sure_btn'),
+        go_select: $('#go_select'),
+        stage_game: $('#stage_game'),
       },
       conf: {
         clientWidth: document.body.clientWidth,
@@ -79,8 +101,13 @@
       bindUI: function() {
           _pri.node.start_btn.on("click", _pri.util.startGame);
           _pri.node.select_btn_all.on("click",_pri.util.selectFun);
+          _pri.node.sure_btn.on("click",_pri.util.startGameFun);
       },
       util: {
+        startGameFun: function(){
+          _pri.node.go_select.fadeOut('slow');
+          _pri.node.stage_game.fadeIn('slow');
+        },
         shake: function(){
           if(window.DeviceMotionEvent) {
               var speed = 25;
@@ -158,4 +185,6 @@
       // window.addEventListener("onorientationchange" in window ? "orientationchange" : "resize", _pri.util.hengshuping, false);
   }
   init();
+  });//end of halo.use
+});
 })();//end of ()
