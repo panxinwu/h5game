@@ -99,7 +99,7 @@ input[type="text"], textarea {
   right: 0;
   top: 0;
   bottom: 0;
-  z-index: 10;
+  z-index: 10000;
   background: url(../images/play_bg_c906301b.png) no-repeat;
   background-size: 100% 100%;
 }
@@ -182,6 +182,7 @@ input[type="text"], textarea {
   height: 38px;
   text-align: center;
   font-size: 0;
+  left:25px;
 }
 .role_name:after {
   content: '';
@@ -209,6 +210,7 @@ input[type="text"], textarea {
   font-weight: bold;
   white-space: nowrap;
 }
+.role_name img{width:45px;height:45px;position: relative;top:-18px;border:1px solid #817b79;}
 .role_name_txt:after {
   content: '';
   position: absolute;
@@ -319,7 +321,7 @@ input[type="text"], textarea {
   top: 50%;
   -webkit-transform: translateX(-50%) translateY(-50%);
   transform: translateX(-50%) translateY(-50%);
-  z-index: 1000;
+  z-index: 10000;
 }
 
 .stage_tips_btn {

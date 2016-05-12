@@ -232,6 +232,9 @@ halo.use('loader', function(m){
                     var sum = Math.abs(x-lastX) + Math.abs(y-lastY);
                     var x = Math.floor(sum/10);
                     _pri.conf.x_position = _pri.conf.x_position - x;
+                    if (_pri.util.speed <= 40) {
+ +                      _pri.util.speed += 1;
+ +                    }
                     if(_pri.conf.x_position <= 0){
                         $(_pri.conf.thisDom).fadeOut();
                         $(_pri.node.stage_tips_txt).html(GUEST_ENUM[_pri.util.selectedGuest[_pri.conf.num]]);
