@@ -419,7 +419,7 @@ input[type="text"], textarea {
   background-size: 82px auto;
 }
 .seconds_wrap{width:12em;position: absolute;top:0;left:50%;margin-left:-6em;text-align: center;}
-.seconds_wrap .seconds_num{color:#de2e20;font-size:50px;}
+.seconds_wrap .seconds_num{color:#de2e20;font-size:40px;line-height: 75px;display: block;}
 .loading_bg {
   position: relative;
   width: 193px;

@@ -22,14 +22,14 @@ halo.use('loader', function(m){
     var SEX_MALE = 0;
     var SEX_FEMALE = 1;
     var GUEST_ENUM = {
-      0: 'wangdongcheng',
-      1: 'duchun',
-      2: 'linyun',
-      3: 'ella',
-      4: 'songxiaobao',
-      5: 'tianliang',
-      6: 'duhaitao',
-      7: 'jialing'
+      0: '汪东城',
+      1: '杜淳',
+      2: '林允',
+      3: 'ELLA',
+      4: '宋小宝',
+      5: '田亮',
+      6: '杜海涛',
+      7: '贾玲'
     };
     var _tool = {
       support3d: ('WebKitCSSMatrix' in window && 'm11' in new WebKitCSSMatrix()),
@@ -73,6 +73,7 @@ halo.use('loader', function(m){
         score_num: $('#score_num'),
         bar_red: $('.bar_red'),
         bar_black: $('.bar_black'),
+        stage_tips_txt: $('#stage_tips_txt'),
       },
       conf: {
         clientWidth: document.body.clientWidth,
@@ -233,10 +234,11 @@ halo.use('loader', function(m){
                     _pri.conf.x_position = _pri.conf.x_position - x;
                     if(_pri.conf.x_position <= 0){
                         $(_pri.conf.thisDom).fadeOut();
+                        $(_pri.node.stage_tips_txt).html(GUEST_ENUM[_pri.util.selectedGuest[_pri.conf.num]]);
+                        $(_pri.node.bar_red[_pri.conf.num]).css('display','none');
                         _pri.conf.num = _pri.conf.num + 1;
                         $(_pri.node.score_num).html('X0'+_pri.conf.num);
                         $(_pri.node.bar_black).css('left',15*_pri.conf.num + '%');
-                        $(_pri.node.bar_red).css('display','none');
                         if(_pri.conf.num >= 6){
                           $('.stage_tips_4').fadeIn();
                           clearInterval(_pri.conf.gameClock);
