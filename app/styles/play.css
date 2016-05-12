@@ -418,7 +418,8 @@ input[type="text"], textarea {
   background: url(../images/loading_txt_10175546.png) no-repeat;
   background-size: 82px auto;
 }
-
+.seconds_wrap{width:12em;position: absolute;top:0;left:50%;margin-left:-6em;text-align: center;}
+.seconds_wrap .seconds_num{color:#de2e20;font-size:50px;}
 .loading_bg {
   position: relative;
   width: 193px;
