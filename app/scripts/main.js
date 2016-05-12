@@ -1,5 +1,5 @@
 (function(){
-  var loading_barwidth = 0;
+var loading_barwidth = 0;
 halo.use('loader', function(m){
   m.loader(['images/stage_bg_73d0c060.png',
   'images/bg_all.png',
@@ -62,7 +62,11 @@ halo.use('loader', function(m){
         sure_btn: $('#sure_btn'),
         stage_game: $('#stage_game'),
         sex_item: $('.sex_item'),
-        role_item_jiabin: $('.role_item_jiabin')
+        role_item_jiabin: $('.role_item_jiabin'),
+        stage_tips_1: $('.stage_tips_1'),
+        stage_tips_2: $('.stage_tips_2'),
+        stage_tips_3: $('.stage_tips_3'),
+        stage_tips_4: $('.stage_tips_3'),
       },
       conf: {
         clientWidth: document.body.clientWidth,
@@ -137,9 +141,15 @@ halo.use('loader', function(m){
           _pri.node.start_btn.on("click", _pri.util.startGame);
           _pri.node.select_btn_all.on("click",_pri.util.selectFun);
           _pri.node.sure_btn.on("click",_pri.util.startGameFun);
+          _pri.node.stage_tips_1.on("click",_pri.util.hideDom);
       },
       util: {
         speed: 10,
+        hideDom: function(){
+          $(this).fadeOut('slow');
+          $(window).on('devicemotion', _pri.util.shakeMove, false);
+          $(_pri.node.role_item_jiabin[_pri.util.selectedGuest[_pri.conf.num+1]]).fadeIn();
+        },
         startGameFun: function(){
           var selectedGuest = _pri.util.selectedGuest;
           var selectedSex = _pri.util.selectedSex;
@@ -176,28 +186,38 @@ halo.use('loader', function(m){
         },
         shake: function(){
           if(window.DeviceMotionEvent) {
+              $(window).on('devicemotion', _pri.util.shakeMove, false);
+          }else{alert('您的设备不支持重力感应');}
+        },
+        shakeMove: function(event){
               var speed = 25;
               var x, y, z, lastX, lastY, lastZ;
               x = y = z = lastX = lastY = lastZ = 0;
-              window.addEventListener('devicemotion', function(event){
-                  var acceleration = event.accelerationIncludingGravity;
-                  x = acceleration.x;
-                  y = acceleration.y;
-                  if(Math.abs(x-lastX) > speed || Math.abs(y-lastY) > speed) {
-                    var sum = Math.abs(x-lastX) + Math.abs(y-lastY);
-                    var x = Math.floor(sum/10);
-                    _pri.conf.x_position = _pri.conf.x_position - x;
-                    if(_pri.conf.x_position <= 0){
-                        $(_pri.conf.thisDom).fadeOut();
-                        $('.stage_tips_1').fadeIn();
+              var acceleration = event.accelerationIncludingGravity;
+              x = acceleration.x;
+              y = acceleration.y;
+              if(Math.abs(x-lastX) > speed || Math.abs(y-lastY) > speed) {
+                var sum = Math.abs(x-lastX) + Math.abs(y-lastY);
+                var x = Math.floor(sum/10);
+                _pri.conf.x_position = _pri.conf.x_position - x;
+                if(_pri.conf.x_position <= 0){
+                    $(_pri.conf.thisDom).fadeOut();
+                    _pri.conf.num = _pri.conf.num + 1;
+                    if(_pri.conf.num >= 6){
+                      $('.stage_tips_4').fadeIn();
+                      return;
                     }
-                    $(_pri.conf.thisDom).attr('style','transform: translateX('+ _pri.conf.x_position+ 'px);display:block;');
-                    // alert($(_pri.conf.thisDom).attr('style'));
-                  };
-                  lastX = x;
-                  lastY = y;
-              }, false);
-          }
+                    $('.stage_tips_1').fadeIn();
+                    // alert($(_pri.node.role_item_jiabin[selectedGuest[_pri.conf.num]]));
+                    _pri.conf.thisDom = _pri.node.role_item_jiabin[_pri.util.selectedGuest[_pri.conf.num]];
+                    _pri.conf.x_position = 350;
+                    $(window).off();
+                }
+                $(_pri.conf.thisDom).attr('style','transform: translateX('+ _pri.conf.x_position+ 'px);display:block;');
+                // alert($(_pri.conf.thisDom).attr('style'));
+              };
+              lastX = x;
+              lastY = y;
         },
         eye_iconAni: function(){
           var clockkkkkk = setTimeout(function(){

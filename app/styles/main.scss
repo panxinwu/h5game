@@ -131,7 +131,7 @@ textarea {
   .eye_iconAni{animation:eyeani 2.5s steps(50,end);}
   .start_btn{width:170px;height:100px;position: absolute;bottom:0;left:37%;display: block;}
   .go_select{background:url(../images/bg_all.png) no-repeat;background-size:100% 100%;width:100%;height:100%;overflow: hidden;position: relative;}
-  .go_select_wrap{width:518px;height:320px;margin:0 auto;background:url(../images/select_bg.png) no-repeat;background-size:100% 100%;overflow: hidden;position: absolute;left:0;bottom:0;right:0;top:0;}
+  .go_select_wrap{width:518px;height:320px;margin:0 auto;background:url(../images/select_bg.png) no-repeat;background-size:100% 100%;overflow: hidden;position: absolute;left:0;bottom:0;right:0;top:-5%;}
   .sex_select{width:px2(220);position: absolute;left:17%;top:48%;}
   .boy{width:px2(62);height:px2(81);background:url(../images/boy.png) no-repeat;background-size:100%;display: block;position: relative;}
   .girl{width:px2(89);height:px2(75);background:url(../images/girl.png) no-repeat;background-size:100%;display: block;margin-top:30px;margin-left:-10px;position: relative;}
