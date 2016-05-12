@@ -61,7 +61,8 @@ halo.use('loader', function(m){
         stage_bg_move: $('#stage_bg_move'),
         sure_btn: $('#sure_btn'),
         stage_game: $('#stage_game'),
-        role_1: $('#role_1'),
+        sex_item: $('.sex_item'),
+        role_item_jiabin: $('.role_item_jiabin')
       },
       conf: {
         clientWidth: document.body.clientWidth,
@@ -69,6 +70,8 @@ halo.use('loader', function(m){
         radioWidth: window.screen.width,
         radioHeight: window.screen.height,
         x_position: 350,
+        thisDom: '',
+        num: 0,
       },
       resizeFun : {
         _fixMode: "height",
@@ -142,8 +145,15 @@ halo.use('loader', function(m){
           var selectedSex = _pri.util.selectedSex;
           console.log(selectedGuest);
           console.log(selectedSex);
+          $(_pri.node.sex_item[selectedSex]).fadeIn();
+          $(_pri.node.role_item_jiabin[selectedGuest[0]]).fadeIn();
+          $(_pri.node.role_item_jiabin[selectedGuest[1]]).fadeIn();
+          _pri.conf.thisDom = _pri.node.role_item_jiabin[selectedGuest[_pri.conf.num]];
+          for(var i = 2; i < selectedGuest.length;i++){
+            // $(_pri.node.role_item_jiabin[selectedGuest[i]]).fadeIn();
+          }
           if (selectedGuest.length < 6) {
-            alert('人数不够');
+            alert('嘉宾必须选择6位');
           } else {
             _pri.node.go_select.fadeOut('slow');
             _pri.node.stage_game.fadeIn('slow');
@@ -166,7 +176,7 @@ halo.use('loader', function(m){
         },
         shake: function(){
           if(window.DeviceMotionEvent) {
-              var speed = 15;
+              var speed = 25;
               var x, y, z, lastX, lastY, lastZ;
               x = y = z = lastX = lastY = lastZ = 0;
               window.addEventListener('devicemotion', function(event){
@@ -177,13 +187,13 @@ halo.use('loader', function(m){
                     var sum = Math.abs(x-lastX) + Math.abs(y-lastY);
                     var x = Math.floor(sum/10);
                     _pri.conf.x_position = _pri.conf.x_position - x;
-                    _pri.node.role_1.attr('style','-webkit-transform: translateX('+ _pri.conf.x_position+ 'px);');
-                      // _pri.node.stage_bg_move.removeClass('speed0').addClass('speednone').addClass('speed3').removeClass('speednone');
-                      // _pri.node.stage_bg_move.css('animation-duration', '3s');
-                      // _pri.node.stage_bg_move.css('-webkit-animation-duration', '3s');
-                      _pri.util.speed = 30;
-                      // alert(_pri.node.stage_bg_move.attr('class'));
-                    };
+                    if(_pri.conf.x_position <= 0){
+                        $(_pri.conf.thisDom).fadeOut();
+                        $('.stage_tips_1').fadeIn();
+                    }
+                    $(_pri.conf.thisDom).attr('style','transform: translateX('+ _pri.conf.x_position+ 'px);display:block;');
+                    // alert($(_pri.conf.thisDom).attr('style'));
+                  };
                   lastX = x;
                   lastY = y;
               }, false);
