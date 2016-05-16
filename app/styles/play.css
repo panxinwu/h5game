@@ -100,7 +100,7 @@ input[type="text"], textarea {
   top: 0;
   bottom: 0;
   z-index: 10000;
-  background: url(../images/play_bg_c906301b.png) no-repeat;
+  background-image: url(../images/play_bg_2.png);
   background-size: 100% 100%;
 }
 
@@ -119,10 +119,19 @@ input[type="text"], textarea {
   float: left;
   width: 31px;
   height: 31px;
-  background: url(../images/play_eye_887bf49d.png) no-repeat;
-  background-size: 31px auto;
+  overflow: hidden;
+  background: url(../images/eye1.png) repeat-x;
+  background-position: 0 0;
+  background-size:  279px auto;
 }
-
+.score_eye_ani{
+  animation: eye1ani 1s infinite steps(9,end);
+}
+@-webkit-keyframes eye1ani
+{
+  0% {background-position: 0 0; }
+  100% {background-position: -279px -0px;}
+}
 .score_num {
   float: left;
   height: 31px;
@@ -321,7 +330,7 @@ input[type="text"], textarea {
   top: 50%;
   -webkit-transform: translateX(-50%) translateY(-50%);
   transform: translateX(-50%) translateY(-50%);
-  z-index: 10000;
+  z-index: 90000;
 }
 
 .stage_tips_btn {
@@ -393,12 +402,12 @@ input[type="text"], textarea {
   left: 95px;
   top: 70px;
   color: #fff;
-  font-size: 16px;
+  font-size: 20px;
   width: 70px;
+  line-height: 25px;
   white-space: nowrap;
   text-align: center;
 }
-
 /* Loading */
 .loading {
   position: absolute;
@@ -464,3 +473,83 @@ input[type="text"], textarea {
  * @author: mihan
  * @time: 2016-5-8
 */
+.stage_count{
+    position: absolute;
+    left: 0;
+    right:0;
+    top: 0;
+}
+
+.stage_count_box{
+    position: relative;
+    text-align: center;
+}
+
+.stage_count_box img{
+    width: 100%;
+}
+
+.stage_count_tit{
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    color: #fff;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.stage_count_tit span{
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.stage_count_tit:after{
+    content: '';
+    height: 100%;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.go .text_icon{
+    left: 50%;
+    margin: 0 0 0 -135px;
+}
+
+.go .eye_icon{
+    left: 50%;
+    margin: 0 0 0 -57px;
+}
+
+.go .start_btn{
+    left: 50%;
+    margin: 0 0 0 -85px;
+}
+
+.go .go_select{
+    display: -webkit-box;
+    -webkit-box-pack: center;
+    -webkit-box-align: center;
+}
+
+.go .go_select_wrap{
+    position: relative;
+    margin: 0;
+}
+
+.go .sex_select{
+    top: 47%;
+    left: 18%;
+}
+
+.go .guest{
+    top: 47%;
+}
+
+.loading_bar{
+    -webkit-transition: width 0.4s ease;
+    -moz-transition: width 0.4s ease;
+    transition: width 0.4s ease;
+    transform: translateZ(0);
+}

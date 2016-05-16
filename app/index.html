@@ -5,7 +5,6 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <title>网易加速Go</title>
-    <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <!-- Place favicon.ico in the root directory -->
     <!-- build:css styles/vendor.css -->
     <!-- bower:css -->
@@ -32,8 +31,12 @@
     <div id="loading" class="loading">
       <div class="loading_flex">
         <div class="loading_tit"></div>
-        <div class="loading_bg">
+        <div class="loading_bg" >
           <div id="loading_bar" class="loading_bar" style="width: 0%"></div>
+
+        </div>
+        <div class="loading_logo">
+          <img src="images/loading_logo.png" alt="" />
         </div>
       </div>
     </div>
@@ -72,16 +75,19 @@
               <div class="stage_bg_move"></div>
             </div>
             <div class="stage_box">
+            <div class="stage_count">
+              <div class="stage_count_box">
+                <img src="images/play_count_bg.png">
+                <div  class="stage_count_tit"><span id="seconds_num" class="seconds_num">60s</span></div>
+              </div>
+            </div>
               <div class="stage_main">
                 <div class="score">
-                  <div class="score_eye"></div>
+                  <div class="score_eye "></div>
                   <div id="score_num" class="score_num">X00</div>
                 </div>
-                <div class="seconds_wrap">
-                  <span id="seconds_num" class="seconds_num">60s</span>
-                </div>
                 <div class="role">
-                <div id="sex_0" class="role_item sex_item role_2 hide" style="-webkit-transform: translateX(0px);">
+                <div id="sex_0" class="role_item sex_item role_2 hide" style="-webkit-transform: translateX(0);">
                   <div class="role_name">
                     <img src="http://placehold.it/45x45" />
                   </div>
@@ -94,49 +100,49 @@
                     <div class="role_body"></div>
                   </div>
 
-                  <div id="role_0" class="role_item role_item_jiabin role_9 hide" style="-webkit-transform: translateX(300px);">
+                  <div id="role_0" class="role_item role_item_jiabin role_9 hide" style="-webkit-transform: translateX(15rem);">
                     <div class="role_name">
                       <div class="role_name_txt"><i>汪东城</i></div>
                     </div>
                     <div class="role_body"></div>
                   </div>
-                  <div id="role_1" class="role_item role_item_jiabin role_7 hide" style="-webkit-transform: translateX(350px);">
+                  <div id="role_1" class="role_item role_item_jiabin role_7 hide" style="-webkit-transform: translateX(15rem);">
                     <div class="role_name">
                       <div class="role_name_txt"><i>杜淳</i></div>
                     </div>
                     <div class="role_body"></div>
                   </div>
-                  <div id="role_2" class="role_item role_item_jiabin role_5 hide" style="-webkit-transform: translateX(350px);">
+                  <div id="role_2" class="role_item role_item_jiabin role_5 hide" style="-webkit-transform: translateX(15rem);">
                     <div class="role_name">
                       <div class="role_name_txt"><i>林允</i></div>
                     </div>
                     <div class="role_body"></div>
                   </div>
-                  <div id="role_3" class="role_item role_item_jiabin role_8 hide" style="-webkit-transform: translateX(350px);">
+                  <div id="role_3" class="role_item role_item_jiabin role_8 hide" style="-webkit-transform: translateX(15rem);">
                     <div class="role_name">
                       <div class="role_name_txt"><i>ELLA</i></div>
                     </div>
                     <div class="role_body"></div>
                   </div>
-                  <div  id="role_4" class="role_item role_item_jiabin role_10 hide" style="-webkit-transform: translateX(350px);">
+                  <div  id="role_4" class="role_item role_item_jiabin role_10 hide" style="-webkit-transform: translateX(15rem);">
                     <div class="role_name">
                       <div class="role_name_txt"><i>宋小宝</i></div>
                     </div>
                     <div class="role_body"></div>
                   </div>
-                  <div id="role_5" class="role_item role_item_jiabin role_3  hide" style="-webkit-transform: translateX(350px);">
+                  <div id="role_5" class="role_item role_item_jiabin role_3  hide" style="-webkit-transform: translateX(17rem);">
                     <div class="role_name">
                       <div class="role_name_txt"><i>田亮</i></div>
                     </div>
                     <div class="role_body"></div>
                   </div>
-                  <div id="role_6" class="role_item role_item_jiabin role_6 hide" style="-webkit-transform: translateX(350px);">
+                  <div id="role_6" class="role_item role_item_jiabin role_6 hide" style="-webkit-transform: translateX(15rem);">
                     <div class="role_name">
                       <div class="role_name_txt"><i>杜海涛</i></div>
                     </div>
                     <div class="role_body"></div>
                   </div>
-                  <div id="role_7" class="role_item  role_item_jiabin role_4 hide" style="-webkit-transform: translateX(350px);">
+                  <div id="role_7" class="role_item  role_item_jiabin role_4 hide" style="-webkit-transform: translateX(15rem);">
                     <div class="role_name">
                       <div class="role_name_txt"><i>贾玲</i></div>
                     </div>
@@ -174,6 +180,9 @@
               <div class="stage_tips_btn stage_tips_btn_r"></div>
             </div>
           </div>
+        </div>
+        <div id="share_wrap" class="share_wrap">
+          <span class="share_txt_icon"></span>
         </div>
       </div>
     </script>

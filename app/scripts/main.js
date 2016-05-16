@@ -1,13 +1,34 @@
 (function(){
+  function vibratePhone(){
+  }
+
+function stopVibrate(){
+
+}
+function login(){
+
+}
 var loading_barwidth = 0;
 halo.use('loader', function(m){
   m.loader(['images/stage_bg_73d0c060.png',
   'images/bg_all.png',
+  'images/index1_bg.png',
+  'images/play_bg_2.png',
   'images/loading_floor_2edcdddc.png',
-  'images/play_bg_c906301b.png',
+  'images/play_bg_2.png',
+  'images/role_bg_1_2b0d55d5.png',
+  'images/role_bg_2_a69a1ecf.png',
+  'images/role_bg_3_f0cdd474.png',
+  'images/role_bg_4_343f88cb.png',
+  'images/role_bg_5_80784572.png',
+  'images/role_bg_6_7b43bb9f.png',
+  'images/role_bg_7_57ccf87e.png',
+  'images/role_bg_8_8d1df79f.png',
+  'images/role_bg_9_bf8e45be.png',
+  'images/role_bg_10_71b0edf8.png',
   'images/zhayan.png',])
   .loadend(function(percent){
-    loading_barwidth = loading_barwidth +  20;
+    loading_barwidth = loading_barwidth +  5.8;
     $('#loading_bar').css('width',loading_barwidth+"%");
   })
   .complete(function(){
@@ -74,18 +95,20 @@ halo.use('loader', function(m){
         bar_red: $('.bar_red'),
         bar_black: $('.bar_black'),
         stage_tips_txt: $('#stage_tips_txt'),
+        share_wrap: $('#share_wrap'),
       },
       conf: {
         clientWidth: document.body.clientWidth,
         clientHeight: document.body.clientHeight,
         radioWidth: window.screen.width,
         radioHeight: window.screen.height,
-        x_position: 350,
+        x_position: 13,
         thisDom: '',
         num: 0,
         clockTime:0,
         shaked:0,
         gameClock:'',
+        successOrFail: 0,
       },
       resizeFun : {
         _fixMode: "height",
@@ -151,14 +174,26 @@ halo.use('loader', function(m){
           _pri.node.start_btn.on("click", _pri.util.startGame);
           _pri.node.select_btn_all.on("click",_pri.util.selectFun);
           _pri.node.sure_btn.on("click",_pri.util.startGameFun);
-          _pri.node.stage_tips_1.on("click",_pri.util.hideDom);
+          _pri.node.stage_tips_1.on("click",_pri.util.hideDom1);
           _pri.node.stage_tips_2.on("click",_pri.util.hideDom);
           _pri.node.stage_tips_btn_l.on("click",_pri.util.startAgain);
           _pri.node.stage_tips_btn_r.on("click",_pri.util.share);
+          _pri.node.share_wrap.on("click",_pri.util.hideDom);
       },
       util: {
+        hideShare:function(){
+          $(this).fadeOut();
+        },
+        startAgain: function(){
+          window.location.href = window.location.href;
+        },
         share: function(){
-
+          $(_pri.node.share_wrap).fadeIn();
+          if(_pri.conf.successOrFail){
+            setShareTitle(1);
+          }else{
+            setShareTitle(0);
+          }
         },
         speed: 10,
         hideDom: function(){
@@ -166,17 +201,27 @@ halo.use('loader', function(m){
           $(window).on('devicemotion', _pri.util.shakeMove, false);
           $(_pri.node.role_item_jiabin[_pri.util.selectedGuest[_pri.conf.num+1]]).fadeIn();
         },
+        hideDom1: function(){
+          $(this).fadeOut('slow');
+          $('.score_eye').addClass('score_eye_ani');
+          var clock  = setTimeout(function(){
+            $('.score_eye').removeClass('score_eye_ani');
+          },1000);
+          stopVibrate();
+          $(window).on('devicemotion', _pri.util.shakeMove, false);
+          $(_pri.node.role_item_jiabin[_pri.util.selectedGuest[_pri.conf.num+1]]).fadeIn();
+        },
         startGameFun: function(){
+          // readyGo();
+          // setUserImg();
           _pri.util.gameClock();
+          _pri.node.stage_tips_2.fadeIn();
           var selectedGuest = _pri.util.selectedGuest;
           var selectedSex = _pri.util.selectedSex;
           $(_pri.node.sex_item[selectedSex]).fadeIn();
-          $(_pri.node.role_item_jiabin[selectedGuest[0]]).fadeIn();
+          $(_pri.node.role_item_jiabin[selectedGuest[0]]).fadeIn().attr('style','transform: translateX(13rem);display:block;');;
           $(_pri.node.role_item_jiabin[selectedGuest[1]]).fadeIn();
           _pri.conf.thisDom = _pri.node.role_item_jiabin[selectedGuest[_pri.conf.num]];
-          for(var i = 2; i < selectedGuest.length;i++){
-            // $(_pri.node.role_item_jiabin[selectedGuest[i]]).fadeIn();
-          }
           if (selectedGuest.length < 6) {
             alert('嘉宾必须选择6位');
           } else {
@@ -188,14 +233,16 @@ halo.use('loader', function(m){
         gameClock: function(){
           _pri.conf.gameClock  = setInterval(function(){
             _pri.conf.clockTime =   _pri.conf.clockTime+1;
+            if(_pri.util.speed >= 10){_pri.util.speed -= 5;}
+
             $(_pri.node.seconds_num).html(60-_pri.conf.clockTime+ 's');
             if(_pri.conf.clockTime == 3 && !_pri.conf.shaked){
               $('.stage_tips_2').fadeIn();
             }
             if(_pri.conf.clockTime >= 60){
-              clearInterval(_pri.conf.gameClock);
               $('.stage_tips_3').fadeIn();
-              clearInterval(clock);
+              clearInterval(_pri.conf.gameClock);
+              // clearInterval(clock);
               return;
             }
           },1000);
@@ -215,13 +262,12 @@ halo.use('loader', function(m){
             run();
         },
         shake: function(){
-
           if(window.DeviceMotionEvent) {
               $(window).on('devicemotion', _pri.util.shakeMove, false);
           }else{alert('您的设备不支持重力感应');}
         },
         shakeMove: function(event){
-              var speed = 25;
+              var speed = 5;
               var x, y, z, lastX, lastY, lastZ;
               x = y = z = lastX = lastY = lastZ = 0;
               var acceleration = event.accelerationIncludingGravity;
@@ -230,30 +276,34 @@ halo.use('loader', function(m){
               if(Math.abs(x-lastX) > speed || Math.abs(y-lastY) > speed) {
                     _pri.conf.shaked = 1; //摇动过
                     var sum = Math.abs(x-lastX) + Math.abs(y-lastY);
-                    var x = Math.floor(sum/10);
+                    var x = sum/900;
                     _pri.conf.x_position = _pri.conf.x_position - x;
                     if (_pri.util.speed <= 40) {
- +                      _pri.util.speed += 1;
- +                    }
+                      _pri.util.speed += 2;
+                    }
                     if(_pri.conf.x_position <= 0){
+                        vibratePhone();
                         $(_pri.conf.thisDom).fadeOut();
                         $(_pri.node.stage_tips_txt).html(GUEST_ENUM[_pri.util.selectedGuest[_pri.conf.num]]);
                         $(_pri.node.bar_red[_pri.conf.num]).css('display','none');
                         _pri.conf.num = _pri.conf.num + 1;
-                        $(_pri.node.score_num).html('X0'+_pri.conf.num);
+                        $(_pri.node.score_num).html('X'+_pri.conf.num);
                         $(_pri.node.bar_black).css('left',15*_pri.conf.num + '%');
                         if(_pri.conf.num >= 6){
+                          _pri.conf.successOrFail = 1;
                           $('.stage_tips_4').fadeIn();
+                          $(window).off();
                           clearInterval(_pri.conf.gameClock);
                           return;
                         }
                         $('.stage_tips_1').fadeIn();
                         // alert($(_pri.node.role_item_jiabin[selectedGuest[_pri.conf.num]]));
                         _pri.conf.thisDom = _pri.node.role_item_jiabin[_pri.util.selectedGuest[_pri.conf.num]];
-                        _pri.conf.x_position = 350;
+                        _pri.conf.x_position = 13;
                         $(window).off();
                     }//end of if
-                    $(_pri.conf.thisDom).attr('style','transform: translateX('+ _pri.conf.x_position+ 'px);display:block;');
+                    // $(_pri.conf.thisDom).attr('style','display:block;');
+                    $(_pri.conf.thisDom).animate({transform:'translateX('+ _pri.conf.x_position+ 'rem)',display:'block'},1000);
                   }
                   lastX = x;
                   lastY = y;
@@ -282,10 +332,9 @@ halo.use('loader', function(m){
           }
           _pri.resizeFun.init().addEl($("#go_container"));
           _pri.util.eye_iconAni();
-
-          // _pri.node.go_container.css({width:_pri.conf.width,height:_pri.conf.height,});
         },
         startGame: function(){
+          // if(!login())return;
           $(_pri.node.go_start).fadeOut('ease');
           $(_pri.node.go_select).fadeIn('ease');
           _pri.util.initSelect();
